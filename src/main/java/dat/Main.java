@@ -1,6 +1,5 @@
 package dat;
 
-import dat.config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
 
 public class Main {
@@ -8,7 +7,7 @@ public class Main {
         System.out.println("Hello world!");
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory("person");
-//hej malte
+
 
     }
 }

@@ -1,9 +1,7 @@
 package dat.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import dat.dtos.LoanTypeDTO;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -17,5 +15,15 @@ public class LoanType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "loan_type", nullable = false)
     private LoanTypeE loanTypeE;
+
+    public LoanType(LoanTypeDTO loanTypeDTO) {
+        this.id=loanTypeDTO.getId();
+        this.loanTypeE=loanTypeDTO.getLoanTypeE();
+    }
+
+
 }

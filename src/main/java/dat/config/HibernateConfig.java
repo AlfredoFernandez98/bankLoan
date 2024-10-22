@@ -1,5 +1,6 @@
 package dat.config;
 
+import dat.entities.*;
 import dat.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
@@ -39,7 +40,11 @@ public class HibernateConfig {
 
     // TODO: IMPORTANT: Add Entity classes here for them to be registered with Hibernate
     private static void getAnnotationConfiguration(Configuration configuration) {
-        //configuration.addAnnotatedClass(Hotel.class);
+        configuration.addAnnotatedClass(Bank.class);
+        configuration.addAnnotatedClass(LoanOffer.class);
+        configuration.addAnnotatedClass(LoanRequest.class);
+        configuration.addAnnotatedClass(LoanType.class);
+        configuration.addAnnotatedClass(LoanUser.class);
 
     }
 

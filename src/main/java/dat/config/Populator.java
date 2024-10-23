@@ -1,6 +1,7 @@
 package dat.config;
 
 import dat.daos.impl.BankDAO;
+import dat.daos.impl.LoanOfferDAO;
 import dat.dtos.BankDTO;
 import dat.entities.Bank;
 import jakarta.persistence.EntityManagerFactory;
@@ -13,11 +14,13 @@ public class Populator {
     private static EntityManagerFactory emf;
 
 
+
     public Populator(BankDAO bankDAO , EntityManagerFactory emf){
         this.bankDAO = bankDAO;
         this.emf = emf;
 
     }
+
 
     public List<BankDTO> populate4Banks(){
         BankDTO b1, b2, b3, b4;
@@ -48,10 +51,7 @@ public class Populator {
 //        loanOfferDTO1.add(new LoanOfferDTO(null, 1.5,200000,15, LocalDateTime.now(),loanType1,b1,null));
 //
 
-
-
         return List.of(b1, b2, b3, b4);
-
 
     }
 

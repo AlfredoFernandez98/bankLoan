@@ -101,7 +101,6 @@ public class LoanOfferDAO implements IDAO<LoanOfferDTO> {
                 em.getTransaction().commit();
             }
         }
-
     }
 
     @Override

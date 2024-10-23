@@ -6,10 +6,7 @@ import dat.dtos.BankDTO;
 import dat.entities.Bank;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -54,21 +51,35 @@ class BankDAOTest {
 
     @Test
     void getById() {
+
+        int expected =1;
+
+        Assertions.assertEquals(expected, bankDAO.getById(1L).get().getId());
     }
 
     @Test
     void getAll() {
+        int expected = 4;
+        assertEquals(expected, bankDAO.getAll().size());
     }
 
     @Test
     void update() {
+        BankDTO bankDTO = bankDAO.getById(1L).get();
+        bankDTO.setName("Bank 1 updated");
+        bankDAO.update(bankDTO);
+        assertEquals("Bank 1 updated", bankDAO.getById(1L).get().getName());
     }
 
     @Test
     void delete() {
+        bankDAO.delete(1L);
+        assertFalse(bankDAO.getById(1L).isPresent());
     }
 
     @Test
     void findByName() {
+        BankDTO bankDTO = bankDAO.getById(1L).get();
+        assertEquals(bankDTO.getName(), bankDAO.findByName("Ny kredit").get().getName());
     }
 }

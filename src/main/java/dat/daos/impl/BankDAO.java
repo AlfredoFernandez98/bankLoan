@@ -66,7 +66,6 @@ public class BankDAO implements IDAO<BankDTO> {
             bank.setName(entity.getName());
             Bank mergedBank = em.merge(bank);
             em.getTransaction().commit();
-
         }
 
     }

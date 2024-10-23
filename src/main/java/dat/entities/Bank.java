@@ -20,10 +20,6 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private double interestRate;
-    private int minLoanAmount;
-    private int maxLoanAmount;
-    private int loanDuration;
 
     @OneToMany(mappedBy = "bank", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(name = "loanOffers")
@@ -32,11 +28,14 @@ public class Bank {
     public Bank(BankDTO bankDTO) {
         this.id = bankDTO.getId();
         this.name = bankDTO.getName();
-        this.interestRate = bankDTO.getInterestRate();
-        this.minLoanAmount = bankDTO.getMinLoanAmount();
-        this.maxLoanAmount = bankDTO.getMaxLoanAmount();
-        this.loanDuration = bankDTO.getLoanDuration();
         this.loanOffers = bankDTO.getLoanOffers().stream().map(LoanOffer::new).collect(Collectors.toSet());
+    }
+
+    public void addLoanOffer(LoanOffer loanOffer) {
+        if(loanOffer != null){
+            this.loanOffers.add(loanOffer);
+            loanOffer.setBank(this);
+        }
     }
 
 

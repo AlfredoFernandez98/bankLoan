@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,13 +22,14 @@ public class LoanUser {
     private String name;
 
     @OneToMany(mappedBy = "loanUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "loan_user_id", nullable = false)
     private Set<LoanRequest> loanRequests;
 
     public LoanUser(LoanUserDTO loanUser) {
         this.id = loanUser.getId();
         this.name = loanUser.getName();
-        this.loanRequests = loanUser.getLoanRequest().stream().map(LoanRequest::new).collect(Collectors.toSet());
+        this.loanRequests = loanUser.getLoanRequest() != null
+                ? loanUser.getLoanRequest().stream().map(LoanRequest::new).collect(Collectors.toSet())
+                : Collections.emptySet();
     }
 
     public void setLoanrequest(Set<LoanRequest>loanRequests) {

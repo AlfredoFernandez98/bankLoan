@@ -17,6 +17,10 @@ public class LoanUserDTO {
     private String name;
     private Set<LoanRequestDTO> loanRequest;
 
+    public LoanUserDTO(String name) {
+        this.name = name;
+    }
+
     public LoanUserDTO(LoanUser loanUser) {
         this.id = loanUser.getId();
         this.name = loanUser.getName();

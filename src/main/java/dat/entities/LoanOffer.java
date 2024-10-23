@@ -29,7 +29,7 @@ public class LoanOffer {
     @JoinColumn(name = "bank_id", nullable = false)
     private Bank bank;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "loan_request_id", nullable = true)
     private LoanRequest loanRequest;
 

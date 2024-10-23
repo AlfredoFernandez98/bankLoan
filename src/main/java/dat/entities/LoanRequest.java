@@ -30,7 +30,7 @@ public class LoanRequest {
     @JoinColumn(name = "loan_user_id", nullable = false)
     private LoanUser loanUser;
 
-    @OneToMany(mappedBy = "loanRequest")
+    @OneToMany(mappedBy = "loanRequest",orphanRemoval = true)
     private Set<LoanOffer> loanOffers;
 
     public LoanRequest(LoanRequestDTO loanRequestDTO){

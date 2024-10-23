@@ -4,12 +4,14 @@ import dat.dtos.LoanRequestDTO;
 import dat.security.entities.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@Getter
 @Entity
 @NoArgsConstructor
 public class LoanRequest {

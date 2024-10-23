@@ -3,10 +3,12 @@ package dat.entities;
 import dat.dtos.LoanTypeDTO;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@Getter
 @NoArgsConstructor
 @ToString
 @Entity

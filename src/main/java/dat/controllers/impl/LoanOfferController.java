@@ -53,11 +53,10 @@ public class LoanOfferController implements Controller {
         try{
             Long id= Long.parseLong(ctx.pathParam("id"));
             LoanOfferDTO loanOfferDTO = ctx.bodyAsClass(LoanOfferDTO.class);
-            LoanOfferDTO existingLoanOffer = dao.getById(id)
-                    .orElseThrow(() -> new RuntimeException("LoanOffer not found"));
+            loanOfferDTO.setId(id);
             dao.update(loanOfferDTO);
             ctx.res().setStatus(200);
-            ctx.json(LoanOfferDTO.class);
+            ctx.json(loanOfferDTO,LoanOfferDTO.class);
         }catch (Exception e) {
             ctx.status(400);
             ctx.json(new Message(400, "LoanOffer cannot be updated"));

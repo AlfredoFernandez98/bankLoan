@@ -84,7 +84,13 @@ public class BankDAO implements IDAO<BankDTO> {
             em.getTransaction().begin();
             Bank bank = em.find(Bank.class, id);
             if(bank != null){
-                bank.getLoanOffers().forEach(em::remove);
+                    // Fetch associated LoanOffers
+                    Set<LoanOffer> loanOffers = bank.getLoanOffers();
+                    for (LoanOffer offer : loanOffers) {
+                        // Set LoanRequest to null before deleting the LoanOffer
+                        offer.setLoanRequest(null);  // Prevent cascade deletion of LoanRequest
+                        em.remove(offer);  // Remove the LoanOffer
+                    }
                 em.remove(bank);
                 em.getTransaction().commit();
             }

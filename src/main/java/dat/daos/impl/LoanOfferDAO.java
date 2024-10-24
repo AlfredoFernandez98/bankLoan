@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class LoanOfferDAO implements IDAO<LoanOfferDTO> {
@@ -66,7 +67,7 @@ public class LoanOfferDAO implements IDAO<LoanOfferDTO> {
             return em.createQuery("SELECT new dat.dtos.LoanOfferDTO(l) FROM LoanOffer l", LoanOfferDTO.class)
                     .getResultList()
                     .stream()
-                    .collect(java.util.stream.Collectors.toSet());
+                    .collect(Collectors.toSet());
         }
     }
 

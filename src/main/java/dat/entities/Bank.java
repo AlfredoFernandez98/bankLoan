@@ -21,7 +21,7 @@ public class Bank {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
     @Column(name = "loanOffers")
     private Set<LoanOffer> loanOffers;
 

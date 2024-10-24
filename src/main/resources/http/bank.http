@@ -20,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{URL}}/banks/delete/1
+DELETE {{URL}}/banks/delete/4

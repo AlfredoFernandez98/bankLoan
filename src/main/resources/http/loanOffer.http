@@ -1,0 +1,63 @@
+GET {{URL}}/offers
+
+###
+GET {{URL}}/offers/2
+
+###
+POST {{URL}}/offers/create
+Content-Type: application/json
+
+{
+  "interestRate": 20.0,
+  "amount": 100000000,
+  "duration": 50,
+  "relevanceDate": [
+    2024,
+    10,
+    24,
+    17,
+    43,
+    6,
+    909796000
+  ],
+  "loanType": {
+    "id": 3,
+    "loanTypeE": "PERSONAL_LOAN"
+  },
+  "bank": {
+    "id": 3,
+    "name": "Danske Bank",
+    "loanOffers": []
+  }
+
+}
+
+###
+
+PUT {{URL}}/offers/update/1
+Content-Type: application/json
+
+{
+  "interestRate": 200.0,
+  "amount": 20,
+  "duration": 900,
+  "relevanceDate": [
+    2024,
+    10,
+    24,
+    17,
+    43,
+    6,
+    909796000
+  ],
+  "loanType": {
+    "id": 3,
+    "loanTypeE": "PERSONAL_LOAN"
+  },
+  "bank": {
+    "id": 3,
+    "name": "Danske Bank",
+    "loanOffers": []
+  }
+
+}

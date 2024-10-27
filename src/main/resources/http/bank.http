@@ -1,0 +1,23 @@
+GET {{URL}}/banks
+
+###
+GET {{URL}}/banks/1
+
+###
+POST {{URL}}/banks/create
+Content-Type: application/json
+
+{
+  "name": "Lunar"
+}
+
+###
+PUT {{URL}}/banks/update/1
+Content-Type: application/json
+
+{
+  "name": "SpareBank"
+}
+
+###
+DELETE {{URL}}/banks/delete/4

@@ -21,7 +21,7 @@ public class Bank {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "bank", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
     @Column(name = "loanOffers")
     private Set<LoanOffer> loanOffers;
 

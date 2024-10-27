@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,11 @@ public class LoanRequest {
         this.amount = loanRequestDTO.getAmount();
         this.duration = loanRequestDTO.getDuration();
         this.loanType = new LoanType(loanRequestDTO.getLoanType());
-        this.loanUser = new LoanUser(loanRequestDTO.getLoanUser());
-        this.loanOffers = loanRequestDTO.getLoanOffers().stream().map(LoanOffer::new).collect(Collectors.toSet());
+        this.loanUser = loanRequestDTO.getLoanUser() == null ? null : new LoanUser(loanRequestDTO.getLoanUser());
+        this.loanOffers = loanRequestDTO.getLoanOffers() != null
+                ? loanRequestDTO.getLoanOffers().stream().map(LoanOffer::new).collect(Collectors.toSet())
+                : Collections.emptySet();
+
     }
 
 }

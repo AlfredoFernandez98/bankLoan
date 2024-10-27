@@ -1,27 +1,16 @@
 package dat;
 
 
-import dat.config.HibernateConfig;
-import jakarta.persistence.EntityManagerFactory;
+import dat.config.ApplicationConfig;
+import dat.config.PopulateDB;
+
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            // Brug denne linje til at initialisere EntityManagerFactory og køre det i development mode
-            EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+        ApplicationConfig.startServer(7070);
 
-            // Alternativt kan du bruge denne linje til at teste mod test-databasen (Testcontainers)
-            // EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
+        PopulateDB.main(args);
 
-            if (emf != null) {
-                System.out.println("EntityManagerFactory created successfully!");
-            } else {
-                System.out.println("Failed to create EntityManagerFactory.");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 }

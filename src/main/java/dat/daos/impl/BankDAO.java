@@ -61,12 +61,19 @@ public class BankDAO implements IDAO<BankDTO> {
     public void update(BankDTO entity) {
 
         try(EntityManager em = emf.createEntityManager()) {
+
             em.getTransaction().begin();
             Bank bank = em.find(Bank.class, entity.getId());
+
+            if(bank == null) {
+                throw new RuntimeException("Bank with the id '" + entity.getId() + "' does not exist.");
+            }
+            if(entity.getName() == null || entity.getName().isEmpty()) {
+                throw new RuntimeException("Bank name cannot be null or empty.");
+            }
             bank.setName(entity.getName());
             Bank mergedBank = em.merge(bank);
             em.getTransaction().commit();
-
         }
 
     }
@@ -77,6 +84,13 @@ public class BankDAO implements IDAO<BankDTO> {
             em.getTransaction().begin();
             Bank bank = em.find(Bank.class, id);
             if(bank != null){
+                    // Fetch associated LoanOffers
+                    Set<LoanOffer> loanOffers = bank.getLoanOffers();
+                    for (LoanOffer offer : loanOffers) {
+                        // Set LoanRequest to null before deleting the LoanOffer
+                        offer.setLoanRequest(null);  // Prevent cascade deletion of LoanRequest
+                        em.remove(offer);  // Remove the LoanOffer
+                    }
                 em.remove(bank);
                 em.getTransaction().commit();
             }

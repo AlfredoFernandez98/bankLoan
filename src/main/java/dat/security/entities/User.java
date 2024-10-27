@@ -1,5 +1,6 @@
 package dat.security.entities;
 
+import dat.entities.LoanUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
@@ -37,6 +38,11 @@ public class User implements Serializable, ISecurityUser {
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Role> roles = new HashSet<>();
+
+
+    @OneToOne
+    @JoinColumn(name = "loan_user_id")
+    private LoanUser loanUser;
 
     public Set<String> getRolesAsStrings() {
         if (roles.isEmpty()) {

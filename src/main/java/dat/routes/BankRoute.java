@@ -1,6 +1,7 @@
 package dat.routes;
 
 import dat.controllers.impl.BankController;
+import dat.security.enums.Role;
 import io.javalin.apibuilder.EndpointGroup;
 
 
@@ -11,11 +12,11 @@ public class BankRoute {
 
     protected EndpointGroup getRoutes() {
         return () -> {
-            post("/create", bankController::create);
-            get("/", bankController::getAll);
-            get("/{id}", bankController::getById);
-            put("/update/{id}", bankController::update);
-            delete("/delete/{id}", bankController::delete);
+            post("/create", bankController::create, Role.ADMIN);
+            get("/", bankController::getAll,Role.ANYONE);
+            get("/{id}", bankController::getById,Role.ANYONE);
+            put("/update/{id}", bankController::update, Role.ADMIN);
+            delete("/delete/{id}", bankController::delete,Role.ADMIN);
         };
     }
 

@@ -21,6 +21,9 @@ public class LoanUser {
     private Long id;
     private String name;
 
+    @OneToOne(mappedBy = "loanUser", fetch = FetchType.EAGER)
+    private User user;
+
 
     @OneToMany(mappedBy = "loanUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<LoanRequest> loanRequests;

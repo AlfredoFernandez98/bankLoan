@@ -1,4 +1,6 @@
 GET {{URL}}/banks
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 ###
 GET {{URL}}/banks/1
@@ -21,3 +23,16 @@ Content-Type: application/json
 
 ###
 DELETE {{URL}}/banks/delete/4
+
+###
+POST {{URL}}/auth/login/
+
+{
+    "username": "admin",
+    "password": "1"
+}
+
+> {%
+    client.global.set("jwt_token", response.body.token);
+    console.log("JWT Token:", client.global.get("jwt_token"));
+%}

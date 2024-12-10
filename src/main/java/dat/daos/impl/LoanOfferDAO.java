@@ -47,6 +47,8 @@ public class LoanOfferDAO implements IDAO<LoanOfferDTO> {
             LoanOffer loanOffer = new LoanOffer(entity);
             em.persist(loanOffer);
             em.getTransaction().commit();
+            // Add the loan offer to the bank
+            addLoanOfferToBank(entity.getBank().getId(), loanOffer.getId());
             return new LoanOfferDTO(loanOffer);
 
         }

@@ -2,6 +2,8 @@ package dat.config;
 
 import dat.dtos.*;
 import dat.entities.*;
+import dat.security.entities.Role;
+import dat.security.entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -24,10 +26,37 @@ public class PopulateDB {
         em.persist(carLoan);
         em.persist(personalLoan);
 
+
+
+
+        Role role1 = new dat.security.entities.Role("user");
+        Role role2 = new dat.security.entities.Role("admin");
+
+        em.persist(role1);
+        em.persist(role2);
+
+
+        User user1 = new User("user", "1");
+        User user2 = new User("admin", "1");
+        User user3 = new User("user2", "1");
+        user1.addRole(role1);
+        user2.addRole(role2);
+        user3.addRole(role1);
+
+        em.persist(user1);
+        em.persist(user2);
+        em.persist(user3);
+
+
         // Opret LoanUsers
         LoanUser loanUser1 = new LoanUser(new LoanUserDTO("John Doe"));
-        LoanUser loanUser2 = new LoanUser(new LoanUserDTO("Jane Doe"));
+        LoanUser loanUser2 = new LoanUser(new LoanUserDTO("Alfredo"));
         LoanUser loanUser3 = new LoanUser(new LoanUserDTO("Alice Smith"));
+
+        loanUser1.setUser(user1);
+        loanUser2.setUser(user2);
+        loanUser3.setUser(user3);
+
         em.persist(loanUser1);
         em.persist(loanUser2);
         em.persist(loanUser3);

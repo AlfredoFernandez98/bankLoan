@@ -7,6 +7,8 @@ POST {{URL}}/auth/register/
 {
     "username": "user",
     "password": "test123"
+    "loanUserid": 1
+
 }
 
 ###
@@ -14,7 +16,7 @@ POST {{URL}}/auth/login/
 
 {
     "username": "user",
-    "password": "test123"
+    "password": "1"
 }
 
 > {%

@@ -40,10 +40,6 @@ public class User implements Serializable, ISecurityUser {
     private Set<Role> roles = new HashSet<>();
 
 
-    @OneToOne
-    @JoinColumn(name = "loan_user_id")
-    private LoanUser loanUser;
-
     public Set<String> getRolesAsStrings() {
         if (roles.isEmpty()) {
             return null;

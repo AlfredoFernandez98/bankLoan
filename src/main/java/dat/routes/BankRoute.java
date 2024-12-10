@@ -13,8 +13,8 @@ public class BankRoute {
     protected EndpointGroup getRoutes() {
         return () -> {
             post("/create", bankController::create, Role.ADMIN);
-            get("/", bankController::getAll,Role.ANYONE);
-            get("/{id}", bankController::getById,Role.ANYONE);
+            get("/", bankController::getAll,Role.ADMIN);
+            get("/{id}", bankController::getById,Role.ADMIN);
             put("/update/{id}", bankController::update, Role.ADMIN);
             delete("/delete/{id}", bankController::delete,Role.ADMIN);
         };

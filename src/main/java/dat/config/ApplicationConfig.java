@@ -6,7 +6,6 @@ import dat.security.controllers.AccessController;
 import dat.security.controllers.SecurityController;
 import dat.security.enums.Role;
 import dat.security.exceptions.ApiException;
-import dat.security.exceptions.NotAuthorizedException;
 import dat.security.routes.SecurityRoutes;
 import dat.utils.Utils;
 import io.javalin.Javalin;
@@ -22,7 +21,6 @@ public class ApplicationConfig {
     private static SecurityController securityController = SecurityController.getInstance();
     private static AccessController accessController = new AccessController();
     private static Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
-    private static int count = 1;
 
     public static void configuration(JavalinConfig config) {
         config.showJavalinBanner = false;
@@ -37,16 +35,13 @@ public class ApplicationConfig {
         Javalin app = Javalin.create(ApplicationConfig::configuration);
 
         app.beforeMatched(accessController::accessHandler);
-        app.after(ApplicationConfig::afterRequest);
-        app.before(ApplicationConfig::corsHeaders);
-        app.options("/*", ApplicationConfig::corsHeadersOptions);
 
         app.beforeMatched(ctx -> accessController.accessHandler(ctx));
 
         app.exception(Exception.class, ApplicationConfig::generalExceptionHandler);
-        app.exception(dat.security.exceptions.ApiException.class, ApplicationConfig::apiSecurityExceptionHandler);
-        app.exception(NotAuthorizedException.class, ApplicationConfig::apiNotAuthorizedExceptionHandler);
         app.exception(ApiException.class, ApplicationConfig::apiExceptionHandler);
+        app.before(ApplicationConfig::corsHeaders);
+        app.options("/*", ApplicationConfig::corsHeadersOptions);
         app.start(port);
         return app;
     }
@@ -55,25 +50,9 @@ public class ApplicationConfig {
         app.stop();
     }
 
-    public static void afterRequest(Context ctx) {
-        String requestInfo = ctx.req().getMethod() + " " + ctx.req().getRequestURI();
-        logger.info(" Request {} - {} was handled with status code {}", count++, requestInfo, ctx.status());
-    }
-    public static void apiSecurityExceptionHandler(dat.security.exceptions.ApiException e, Context ctx) {
-        ctx.status(e.getCode());
-        logger.warn("A Security API exception occurred: Code: {}, Message: {}", e.getCode(), e.getMessage());
-        ctx.json(Utils.convertToJsonMessage(ctx, "warning", e.getMessage()));
-    }
-
     private static void generalExceptionHandler(Exception e, Context ctx) {
         logger.error("An unhandled exception occurred", e.getMessage());
         ctx.json(Utils.convertToJsonMessage(ctx, "error", e.getMessage()));
-
-    }
-    public static void apiNotAuthorizedExceptionHandler(NotAuthorizedException e, Context ctx) {
-        ctx.status(e.getStatusCode());
-        logger.warn("A Not authorized Security API exception occurred: Code: {}, Message: {}", e.getStatusCode(), e.getMessage());
-        ctx.json(Utils.convertToJsonMessage(ctx, "warning", e.getMessage()));
     }
 
     public static void apiExceptionHandler(ApiException e, Context ctx) {
@@ -95,4 +74,5 @@ public class ApplicationConfig {
         ctx.header("Access-Control-Allow-Credentials", "true");
         ctx.status(204);
     }
+
 }

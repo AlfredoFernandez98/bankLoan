@@ -1,17 +1,15 @@
 package dat.security.daos;
 
 
+import dat.dtos.LoanUserDTO;
+import dat.entities.LoanUser;
 import dat.security.entities.Role;
 import dat.security.entities.User;
 import dat.security.exceptions.ApiException;
 import dat.security.exceptions.ValidationException;
 import dk.bugelhartmann.UserDTO;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.*;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -83,6 +81,16 @@ public class SecurityDAO implements ISecurityDAO {
                 //em.merge(user);
             em.getTransaction().commit();
             return user;
+        }
+    }
+
+    @Override
+    public LoanUserDTO getLoanUser(String username) {
+        try (EntityManager em = getEntityManager()) {
+            TypedQuery<LoanUser> query = em.createQuery("SELECT l FROM LoanUser l WHERE l.user.username = :username", LoanUser.class);
+            query.setParameter("username", username);
+            LoanUser loanUser = query.getSingleResult();
+            return new LoanUserDTO(loanUser);
         }
     }
 }

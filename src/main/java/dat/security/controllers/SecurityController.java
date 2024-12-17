@@ -3,6 +3,8 @@ package dat.security.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.nimbusds.jose.JOSEException;
+import dat.dtos.LoanUserDTO;
+import dat.entities.LoanUser;
 import dat.utils.Utils;
 import dat.config.HibernateConfig;
 import dat.security.daos.ISecurityDAO;
@@ -57,10 +59,14 @@ public class SecurityController implements ISecurityController {
                 UserDTO user = ctx.bodyAsClass(UserDTO.class);
                 UserDTO verifiedUser = securityDAO.getVerifiedUser(user.getUsername(), user.getPassword());
                 String token = createToken(verifiedUser);
+                LoanUserDTO loanUserDTO = securityDAO.getLoanUser(verifiedUser.getUsername());
 
                 ctx.status(200).json(returnObject
                         .put("token", token)
-                        .put("username", verifiedUser.getUsername()));
+                        .put("username", verifiedUser.getUsername())
+                        .put("name", loanUserDTO.getName()));
+
+
 
             } catch (EntityNotFoundException | ValidationException e) {
                 ctx.status(401);
